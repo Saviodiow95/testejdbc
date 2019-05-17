@@ -21,6 +21,7 @@ public class Principal {
         TelaLogin.telaPrincipal = new TelaPrincipal();
         
         TelaLogin.telaLogin.setVisible(true);
+        // teste web
        
     }    
 }
