@@ -10,6 +10,8 @@ package src.view;
  * @author savio
  */
 public class TelaPrincipal extends javax.swing.JFrame {
+    
+    public static TelaLogin telaLogin;
 
     /**
      * Creates new form TelaPrincipal
@@ -36,11 +38,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         pnFundo.setBackground(new java.awt.Color(204, 204, 204));
 
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/src/icon/IconesLoogout.png"))); // NOI18N
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnFundoLayout = new javax.swing.GroupLayout(pnFundo);
         pnFundo.setLayout(pnFundoLayout);
@@ -101,7 +108,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
         
-        CadastroUsuario cadUser = new CadastroUsuario();
+        TelaCadastroUsuario cadUser = new TelaCadastroUsuario();
         cadUser.setVisible(true);
         
         
@@ -109,10 +116,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        ConsultaUsuarios consulUser = new ConsultaUsuarios();
+        TelaConsultaUsuarios consulUser = new TelaConsultaUsuarios();
         
         consulUser.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        telaLogin.setVisible(true);
+    }//GEN-LAST:event_btnSairActionPerformed
 
     
 

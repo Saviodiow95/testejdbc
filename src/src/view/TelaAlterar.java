@@ -13,14 +13,30 @@ import src.model.entidades.Usuario;
  *
  * @author savio
  */
-public class CadastroUsuario extends javax.swing.JFrame {
+public class TelaAlterar extends javax.swing.JFrame {
 
+    public static TelaConsultaUsuarios telaConsulta;
+    public static Usuario user;
+    
     /**
-     * Creates new form CadastroUsuario
+     * Creates new form Telade
      */
-    public CadastroUsuario() {
+    public TelaAlterar() {
         initComponents();
+        telaConsulta.setEnabled(false);
+        atualizaCampos();
     }
+    
+    private void atualizaCampos()
+    {
+        cpId.setText(""+user.getId());
+        cpNome.setText(user.getNome());
+        cpEmail.setText(user.getEmail());
+        cpSenha.setText(user.getSenha());
+    }
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -37,15 +53,15 @@ public class CadastroUsuario extends javax.swing.JFrame {
         lbNome = new javax.swing.JLabel();
         lbEmail = new javax.swing.JLabel();
         lbSenha = new javax.swing.JLabel();
-        ctNome = new javax.swing.JTextField();
-        ctEmail = new javax.swing.JTextField();
-        ctSenha = new javax.swing.JTextField();
+        cpNome = new javax.swing.JTextField();
+        cpEmail = new javax.swing.JTextField();
+        cpSenha = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        lbId = new javax.swing.JLabel();
+        cpId = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setAlwaysOnTop(true);
-        setResizable(false);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         pnFundo.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -53,7 +69,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Cadastro de Usuarios");
+        jLabel1.setText("Alterar dados de Usuarios");
 
         javax.swing.GroupLayout pnTituloLayout = new javax.swing.GroupLayout(pnTitulo);
         pnTitulo.setLayout(pnTituloLayout);
@@ -61,7 +77,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
             pnTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnTituloLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnTituloLayout.setVerticalGroup(
@@ -78,9 +94,9 @@ public class CadastroUsuario extends javax.swing.JFrame {
 
         lbSenha.setText("Senha:");
 
-        ctNome.addActionListener(new java.awt.event.ActionListener() {
+        cpNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ctNomeActionPerformed(evt);
+                cpNomeActionPerformed(evt);
             }
         });
 
@@ -100,6 +116,10 @@ public class CadastroUsuario extends javax.swing.JFrame {
             }
         });
 
+        lbId.setText("Id:");
+
+        cpId.setEditable(false);
+
         javax.swing.GroupLayout pnFundoLayout = new javax.swing.GroupLayout(pnFundo);
         pnFundo.setLayout(pnFundoLayout);
         pnFundoLayout.setHorizontalGroup(
@@ -113,10 +133,6 @@ public class CadastroUsuario extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSalvar))
                     .addGroup(pnFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pnFundoLayout.createSequentialGroup()
-                            .addComponent(lbNome)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(ctNome, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnFundoLayout.createSequentialGroup()
                             .addGroup(pnFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnFundoLayout.createSequentialGroup()
@@ -126,31 +142,43 @@ public class CadastroUsuario extends javax.swing.JFrame {
                                     .addComponent(lbSenha)
                                     .addGap(7, 7, 7)))
                             .addGroup(pnFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(ctSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-                                .addComponent(ctEmail)))))
+                                .addComponent(cpSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                                .addComponent(cpEmail)))
+                        .addGroup(pnFundoLayout.createSequentialGroup()
+                            .addGroup(pnFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lbNome)
+                                .addComponent(lbId))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(pnFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cpNome, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cpId, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnFundoLayout.setVerticalGroup(
             pnFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnFundoLayout.createSequentialGroup()
                 .addComponent(pnTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(38, 38, 38)
+                .addGroup(pnFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbId)
+                    .addComponent(cpId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbNome)
-                    .addComponent(ctNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cpNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbEmail)
-                    .addComponent(ctEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cpEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbSenha)
-                    .addComponent(ctSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(56, 56, 56)
+                    .addComponent(cpSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(pnFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnCancelar))
-                .addGap(0, 63, Short.MAX_VALUE))
+                .addGap(0, 60, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -167,43 +195,47 @@ public class CadastroUsuario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+    private void cpNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpNomeActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    }//GEN-LAST:event_cpNomeActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-       
-        Usuario user = new Usuario(ctNome.getText(), ctEmail.getText(), ctSenha.getText());
-        
-        
-        if(UsuarioDao.inserir(user))
+
+        user = new Usuario(Integer.parseInt(cpId.getText()),cpNome.getText(), cpEmail.getText(), cpSenha.getText());
+
+        if(UsuarioDao.update(user))
         {
-            JOptionPane.showMessageDialog(rootPane, "Usuario Criado com sucesso");
+            JOptionPane.showMessageDialog(rootPane, "Dados do usuario alterado com sucesso");
+            telaConsulta.setEnabled(true);
             this.dispose();
+            
         }
         else
         {
-            JOptionPane.showMessageDialog(rootPane, "Erro ao criar o usuario");
+            JOptionPane.showMessageDialog(rootPane, "Erro ao alterar dados do usuario");
         }
-        
-        
+
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private void ctNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ctNomeActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ctNomeActionPerformed
+        telaConsulta.setEnabled(true);
+        this.dispose();
+       
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
-    
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JTextField ctEmail;
-    private javax.swing.JTextField ctNome;
-    private javax.swing.JTextField ctSenha;
+    private javax.swing.JTextField cpEmail;
+    private javax.swing.JTextField cpId;
+    private javax.swing.JTextField cpNome;
+    private javax.swing.JTextField cpSenha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lbEmail;
+    private javax.swing.JLabel lbId;
     private javax.swing.JLabel lbNome;
     private javax.swing.JLabel lbSenha;
     private javax.swing.JPanel pnFundo;

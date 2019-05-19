@@ -73,6 +73,11 @@ public class Usuario {
         this.senha = senha;
     }
 
+    @Override
+    public String toString() {
+        return "Usuario" + "\nid: " + id + ",\nnome: " + nome + ",\nemail: " + email + ",\nsenha: " + senha;
+    }
+
     
     
     

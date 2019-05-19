@@ -6,6 +6,7 @@
 package src.view;
 
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import src.model.dao.UsuarioDao;
 import src.model.entidades.Usuario;
@@ -14,13 +15,32 @@ import src.model.entidades.Usuario;
  *
  * @author savio
  */
-public class ConsultaUsuarios extends javax.swing.JFrame {
+public class TelaConsultaUsuarios extends javax.swing.JFrame {
 
     /**
      * Creates new form ConsultaUsurario
      */
-    public ConsultaUsuarios() {
+    public TelaConsultaUsuarios() {
         initComponents();
+        TelaAlterar.telaConsulta = this;
+    }
+
+    private void atualizaTabela() {
+        DefaultTableModel model = (DefaultTableModel) tbDados.getModel();
+        model.setNumRows(0);
+
+        List<Usuario> listaUsuarios = UsuarioDao.consultarTodos();
+
+        for (Usuario user : listaUsuarios) {
+
+            model.addRow(new Object[]{
+                user.getId(),
+                user.getNome(),
+                user.getEmail(),
+                user.getSenha()
+            });
+
+        }
     }
 
     /**
@@ -39,9 +59,10 @@ public class ConsultaUsuarios extends javax.swing.JFrame {
         tbDados = new javax.swing.JTable();
         btnBuscarTodos = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
+        btnDeletar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setAlwaysOnTop(true);
 
         pnFundo.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -101,6 +122,20 @@ public class ConsultaUsuarios extends javax.swing.JFrame {
             }
         });
 
+        btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
+
+        btnDeletar.setText("Deletar");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnFundoLayout = new javax.swing.GroupLayout(pnFundo);
         pnFundo.setLayout(pnFundoLayout);
         pnFundoLayout.setHorizontalGroup(
@@ -114,7 +149,11 @@ public class ConsultaUsuarios extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(pnFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnBuscarTodos, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnSair, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(btnSair, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnFundoLayout.createSequentialGroup()
+                                .addComponent(btnDeletar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAlterar)))))
                 .addContainerGap())
         );
         pnFundoLayout.setVerticalGroup(
@@ -125,7 +164,11 @@ public class ConsultaUsuarios extends javax.swing.JFrame {
                 .addComponent(btnBuscarTodos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAlterar)
+                    .addComponent(btnDeletar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addComponent(btnSair)
                 .addGap(24, 24, 24))
         );
@@ -146,34 +189,74 @@ public class ConsultaUsuarios extends javax.swing.JFrame {
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         // TODO add your handling code here:
-        
+
         this.dispose();
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnBuscarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarTodosActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) tbDados.getModel();
-        model.setNumRows(0);
-        
-        List<Usuario> listaUsuarios =  UsuarioDao.consultarTodos();
-        
-        for (Usuario user : listaUsuarios) {
-            
-            model.addRow(new Object[] {
-                user.getId(),
-                user.getNome(),
-                user.getEmail(),
-                user.getSenha()
-            });
-            
-        }
-        
+        atualizaTabela();
+
     }//GEN-LAST:event_btnBuscarTodosActionPerformed
 
-   
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        // TODO add your handling code here:
+
+        int linha = tbDados.getSelectedRow();
+        if (linha > -1) {
+            int id = Integer.parseInt(tbDados.getValueAt(linha, 0).toString());
+            String nome = tbDados.getValueAt(linha, 1).toString();
+            String email = tbDados.getValueAt(linha, 2).toString();
+            String senha = tbDados.getValueAt(linha, 3).toString();
+
+            TelaAlterar.user = new Usuario(id, nome, email, senha);
+
+            System.out.println(TelaAlterar.user);
+
+            TelaAlterar telaAlterar = new TelaAlterar();
+
+            telaAlterar.setVisible(true);
+
+            atualizaTabela();
+
+        }
+
+
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        // TODO add your handling code here:
+        int linha = tbDados.getSelectedRow();
+        if (linha > -1) {
+            int id = Integer.parseInt(tbDados.getValueAt(linha, 0).toString());
+            String nome = tbDados.getValueAt(linha, 1).toString();
+            String email = tbDados.getValueAt(linha, 2).toString();
+            String senha = tbDados.getValueAt(linha, 3).toString();
+            Usuario user = new Usuario(id, nome, email, senha);
+
+            int resp = JOptionPane.showConfirmDialog(rootPane, "Deseja deletar o " + user);
+
+            if (resp == 0) {
+                if (UsuarioDao.delete(user)) {
+                    JOptionPane.showMessageDialog(rootPane, "Usuario deletado com sucesso");
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Erro ao deletar dados do usuario");
+                }
+
+            }
+
+        }
+
+        atualizaTabela();
+
+
+    }//GEN-LAST:event_btnDeletarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnBuscarTodos;
+    private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnSair;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
